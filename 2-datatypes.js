@@ -98,3 +98,5 @@ console.log("Type of myNextProject:", typeof myNextProject);   // "undefined"
 // This is a legacy bug from the very first version of JS in 1995.
 // They never fixed it to avoid breaking older websites.
 console.log("Type of null (famous JS quirk):", typeof null);   // "object"
+
+//krunal-viradiya
