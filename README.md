@@ -15,7 +15,7 @@ Every script in this repo has easy-to-understand, human-friendly comments explai
 
 ### 🟢 Phase 1: Core Fundamentals
 - [x] `01-variables.js` — `let` vs `const`, storing data, and common mistakes to avoid.
-- [x] `02-data-types.js` — Strings, numbers, booleans, null vs undefined, and typeof.
+- [ ] `02-data-types.js` — Strings, numbers, booleans, null vs undefined, and typeof.
 - [ ] `03-operators.js` — Math, logical operators (`&&`, `||`), and strict checks (`===`).
 - [ ] `04-conditionals.js` — `if`, `else if`, `else`, and quick ternary conditions.
 - [ ] `05-loops.js` — `for`, `while`, and how to loop without breaking things.
