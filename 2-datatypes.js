@@ -99,4 +99,4 @@ console.log("Type of myNextProject:", typeof myNextProject);   // "undefined"
 // They never fixed it to avoid breaking older websites.
 console.log("Type of null (famous JS quirk):", typeof null);   // "object"
 
-//krunal-viradiya
+//krunal-viradiya Githube
