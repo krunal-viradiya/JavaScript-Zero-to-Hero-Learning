@@ -48,7 +48,9 @@ Every script in this repo has easy-to-understand, human-friendly comments explai
    node 2-datatypes.js
    node 3-operators.js
    node 4-conditional.js
-   node 5-functions.js
+   node 5-loops.js
+   node 6-arrays.js
+   node 7-functions.js
    ```
 
 ---
