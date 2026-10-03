@@ -24,7 +24,7 @@ Every script in this repo has easy-to-understand, human-friendly comments explai
 - [x] `06-arrays.js` — Lists, push, pop, slice, and everyday tricks.
 - [x] `07-functions.js` — Function basics, parameters, return values, and modern arrow syntax.
 - [x] `08-objects.js` — Key-value pairs and structuring real-world data.
-- [ ] `09-array-methods.js` — Mastering `.map()`, `.filter()`, and `.reduce()`.
+- [x] `09-array-methods.js` — Mastering `.map()`, `.filter()`, and `.reduce()`.
 
 ### 🟠 Phase 3: Browser & DOM
 - [ ] `10-dom-manipulation.js` — Selecting HTML elements and changing text/styles dynamically.
