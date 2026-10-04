@@ -44,14 +44,15 @@ Every script in this repo has easy-to-understand, human-friendly comments explai
 2. Open terminal in this folder.
 3. Run any topic file:
    ```bash
-   node 1-variables.js
-   node 2-datatypes.js
-   node 3-operators.js
-   node 4-conditional.js
-   node 5-loops.js
-   node 6-arrays.js
-   node 7-functions.js
-   node 8-objects.js
+   node 01-variables.js
+   node 02-datatypes.js
+   node 03-operators.js
+   node 04-conditional.js
+   node 05-loops.js
+   node 06-arrays.js
+   node 07-functions.js
+   node 08-objects.js
+   node 09-array-methords.js
    ```
 
 ---
