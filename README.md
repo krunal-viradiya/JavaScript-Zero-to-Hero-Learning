@@ -27,7 +27,7 @@ Every script in this repo has easy-to-understand, human-friendly comments explai
 - [x] `09-array-methods.js` — Mastering `.map()`, `.filter()`, and `.reduce()`.
 
 ### 🟠 Phase 3: Browser & DOM
-- [ ] `10-dom-manipulation.js` — Selecting HTML elements and changing text/styles dynamically.
+- [x] `10-dom-manipulation.js` — Selecting HTML elements and changing text/styles dynamically.
 - [ ] `11-dom-events.js` — Handling clicks, typing, and form submissions.
 - [ ] `12-localstorage.js` — Storing data directly in the browser memory.
 
