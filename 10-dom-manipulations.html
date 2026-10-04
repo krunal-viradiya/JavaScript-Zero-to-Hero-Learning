@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Day 10: Complete DOM Manipulation Masterclass</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --border: #e2e8f0;
+      --danger: #ef4444;
+      --success: #10b981;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      max-width: 850px;
+      margin: 40px auto;
+      padding: 0 20px 80px 20px;
+      line-height: 1.6;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+
+    h1, h2, h3 {
+      color: #0f172a;
+      margin-top: 0;
+    }
+
+    button {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 14px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-right: 8px;
+      margin-bottom: 8px;
+      transition: opacity 0.2s ease;
+    }
+
+    button:hover { opacity: 0.9; }
+    button.danger-btn { background-color: var(--danger); }
+    button.success-btn { background-color: var(--success); }
+
+    ul { padding-left: 20px; }
+    li { margin-bottom: 6px; }
+
+    /* Classes for dynamic manipulation */
+    .highlighted {
+      background-color: #fef08a !important;
+      color: #854d0e !important;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+
+    .dark-card {
+      background-color: #1e293b;
+      color: #f8fafc;
+    }
+
+    .dark-card h2, .dark-card h3 {
+      color: #38bdf8;
+    }
+
+    .custom-input {
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      width: 60%;
+      margin-right: 8px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      background: #e2e8f0;
+      color: #475569;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="card">
+    <h1 id="main-title">DOM Manipulation Master Guide</h1>
+    <p id="main-desc" class="lead-text">
+      Open your browser console (<kbd>F12</kbd> or <kbd>Ctrl+Shift+I</kbd>) to follow along with the code outputs.
+    </p>
+    <div id="status-badge" class="badge" data-mode="beginner" data-day="10">Day 10 - Active</div>
+  </header>
+
+  <!-- SECTION 1: SELECTION & CONTENT -->
+  <section class="card" id="content-demo-card">
+    <h2>1. Text & HTML Updates</h2>
+    <p id="sample-text">Original paragraph text.</p>
+    <div id="html-container">Container ready for HTML injection.</div>
+    <br />
+    <button id="btn-text">Update with textContent</button>
+    <button id="btn-html">Update with innerHTML</button>
+  </section>
+
+  <!-- SECTION 2: ATTRIBUTES & STYLES -->
+  <section class="card" id="styles-card">
+    <h2>2. Styles & ClassList Control</h2>
+    <p id="style-target">Watch my styling and classes change dynamically!</p>
+    <button id="btn-color">Change Inline CSS</button>
+    <button id="btn-toggle-class">Toggle 'highlighted' Class</button>
+    <button id="btn-toggle-theme">Toggle Dark Theme Card</button>
+  </section>
+
+  <!-- SECTION 3: CREATING & DELETING NODES -->
+  <section class="card" id="crud-nodes-card">
+    <h2>3. Creating, Appending & Removing Elements</h2>
+    <div style="display: flex; margin-bottom: 15px;">
+      <input type="text" id="new-item-input" class="custom-input" placeholder="Type a new framework or skill..." />
+      <button id="btn-add-item" class="success-btn">Add Item</button>
+    </div>
+    <ul id="dynamic-list">
+      <li class="list-item">HTML5 Semantic Core</li>
+      <li class="list-item">CSS Flexbox & Grid</li>
+      <li class="list-item">JavaScript Fundamentals</li>
+    </ul>
+    <button id="btn-remove-last" class="danger-btn">Remove Last Item</button>
+  </section>
+
+  <!-- SECTION 4: TRAVERSAL -->
+  <section class="card" id="traversal-card">
+    <h2>4. DOM Tree Traversal</h2>
+    <div id="family-parent">
+      <p id="child-one">Child 1 (First Born)</p>
+      <p id="child-two">Child 2 (Target Element)</p>
+      <p id="child-three">Child 3 (Youngest)</p>
+    </div>
+    <button id="btn-traverse">Run DOM Tree Walk in Console</button>
+  </section>
+
+
+  <!-- ========================================================= -->
+  <!-- JAVASCRIPT MASTERCLASS IMPLEMENTATION -->
+  <!-- ========================================================= -->
+  <script>
+    // =============================================================
+    // THEORY: WHAT IS THE DOM?
+    // =============================================================
+    // The DOM (Document Object Model) is NOT JavaScript itself.
+    // It is a Web API provided by the browser.
+    // When an HTML file loads, the browser parses the markup and creates
+    // a tree-like hierarchy of objects inside the global 'document'.
+    //
+    // The Tree Structure looks like this:
+    // Window (Global Browser Scope)
+    //   └── Document (The root of the web page)
+    //         └── <html>
+    //               ├── <head> (title, meta, styles)
+    //               └── <body> (h1, p, ul, div, etc.)
+    //                     └── Elements, Attributes, and Text Nodes
+    // =============================================================
+
+
+    // -------------------------------------------------------------
+    // CONCEPT 1: SELECTING ELEMENTS (THE QUERY METHODS)
+    // -------------------------------------------------------------
+    // Modern best practice:
+    // - document.querySelector(selector): Returns the FIRST match
+    // - document.querySelectorAll(selector): Returns a static NodeList
+    // (Legacy methods like getElementById / getElementsByClassName still exist,
+    // but querySelector supports all CSS selector syntax).
+    // -------------------------------------------------------------
+    const mainTitle = document.querySelector("#main-title");
+    const sampleText = document.querySelector("#sample-text");
+    const htmlContainer = document.querySelector("#html-container");
+    const styleTarget = document.querySelector("#style-target");
+    const stylesCard = document.querySelector("#styles-card");
+    const dynamicList = document.querySelector("#dynamic-list");
+    const itemInput = document.querySelector("#new-item-input");
+    const statusBadge = document.querySelector("#status-badge");
+
+    console.log("--- 1. ELEMENT SELECTION ---");
+    console.log("Found title element:", mainTitle);
+    console.log("All list items:", document.querySelectorAll(".list-item"));
+
+
+    // -------------------------------------------------------------
+    // CONCEPT 2: TEXTCONTENT vs INNERHTML vs INNERTEXT
+    // -------------------------------------------------------------
+    // 1. textContent: Safest & fastest. Treats everything as raw plain text.
+    //    Does NOT parse HTML tags (prevents XSS vulnerabilities).
+    // 2. innerText: Reads plain text like textContent, but respects CSS
+    //    (won't return text hidden with display:none).
+    // 3. innerHTML: Parses strings as real HTML tags and builds DOM nodes.
+    // -------------------------------------------------------------
+    document.querySelector("#btn-text").addEventListener("click", () => {
+      // Safe update - tags will display literally as text:
+      sampleText.textContent = "Updated via textContent at: " + new Date().toLocaleTimeString();
+    });
+
+    document.querySelector("#btn-html").addEventListener("click", () => {
+      // Parses tags into actual elements:
+      htmlContainer.innerHTML = `
+        <div style="padding: 10px; background: #e0f2fe; border-left: 4px solid #0284c7; border-radius: 4px;">
+          <strong>Parsed HTML Node:</strong> Injected a bold tag and a <em>styled container</em> dynamically!
+        </div>
+      `;
+    });
+
+
+    // -------------------------------------------------------------
+    // CONCEPT 3: STYLING & CLASSLIST MANIPULATION
+    // -------------------------------------------------------------
+    // A. Inline Styles: element.style.property
+    //    Converts CSS hyphenated names to camelCase:
+    //    'background-color' -> 'backgroundColor', 'font-size' -> 'fontSize'
+    // B. classList API: Much better practice. Keep CSS in stylesheets
+    //    and toggle states using classes:
+    //    - element.classList.add('className')
+    //    - element.classList.remove('className')
+    //    - element.classList.toggle('className')
+    //    - element.classList.contains('className')
+    // -------------------------------------------------------------
+    document.querySelector("#btn-color").addEventListener("click", () => {
+      styleTarget.style.color = "#2563eb";
+      styleTarget.style.fontSize = "18px";
+      styleTarget.style.fontWeight = "bold";
+    });
+
+    document.querySelector("#btn-toggle-class").addEventListener("click", () => {
+      // Toggle adds the class if absent, removes it if present:
+      styleTarget.classList.toggle("highlighted");
+      console.log("Is highlighted?", styleTarget.classList.contains("highlighted"));
+    });
+
+    document.querySelector("#btn-toggle-theme").addEventListener("click", () => {
+      stylesCard.classList.toggle("dark-card");
+    });
+
+
+    // -------------------------------------------------------------
+    // CONCEPT 4: MANAGING ATTRIBUTES & DATA-* ATTRIBUTES
+    // -------------------------------------------------------------
+    // - element.getAttribute(name): Read attribute
+    // - element.setAttribute(name, value): Set/Update attribute
+    // - element.hasAttribute(name): Check presence (boolean)
+    // - element.removeAttribute(name): Delete attribute
+    // - element.dataset: Access custom 'data-*' attributes directly
+    // -------------------------------------------------------------
+    console.log("--- 2. ATTRIBUTE MANAGEMENT ---");
+    console.log("Badge day attribute:", statusBadge.getAttribute("data-day")); // "10"
+    console.log("Using dataset directly:", statusBadge.dataset.mode); // "beginner"
+
+    // Change custom data attribute:
+    statusBadge.dataset.mode = "advanced";
+    statusBadge.setAttribute("title", "Updated via setAttribute");
+
+
+    // -------------------------------------------------------------
+    // CONCEPT 5: CREATING, INSERTING, & DELETING ELEMENTS (CRUD)
+    // -------------------------------------------------------------
+    // In professional apps, avoid building long strings with innerHTML.
+    // Use the official DOM Node Creation methods:
+    // 1. document.createElement(tagName)
+    // 2. parent.appendChild(childNode) OR parent.append(...)
+    // 3. parent.prepend(childNode)
+    // 4. parent.insertBefore(newNode, referenceNode)
+    // 5. element.remove() (modern) OR parent.removeChild(childNode)
+    // -------------------------------------------------------------
+    const addItemBtn = document.querySelector("#btn-add-item");
+    const removeLastBtn = document.querySelector("#btn-remove-last");
+
+    addItemBtn.addEventListener("click", () => {
+      const itemText = itemInput.value.trim();
+
+      if (itemText === "") {
+        alert("Please enter a valid skill title!");
+        return;
+      }
+
+      // Step 1: Create a brand new DOM Element
+      const newLi = document.createElement("li");
+
+      // Step 2: Configure element properties
+      newLi.className = "list-item";
+      newLi.textContent = itemText;
+
+      // Bonus: Add inline delete button to each new item
+      const deleteIcon = document.createElement("span");
+      deleteIcon.textContent = " ✕";
+      deleteIcon.style.color = "red";
+      deleteIcon.style.cursor = "pointer";
+      deleteIcon.style.fontWeight = "bold";
+
+      deleteIcon.addEventListener("click", () => {
+        newLi.remove(); // Removes element directly from DOM
+        console.log(`Deleted: ${itemText}`);
+      });
+
+      newLi.appendChild(deleteIcon);
+
+      // Step 3: Append the element to the parent container
+      dynamicList.appendChild(newLi);
+
+      // Reset input box
+      itemInput.value = "";
+      itemInput.focus();
+    });
+
+    removeLastBtn.addEventListener("click", () => {
+      const lastChild = dynamicList.lastElementChild;
+      if (lastChild) {
+        lastChild.remove();
+        console.log("Removed last element");
+      } else {
+        alert("No more items to delete!");
+      }
+    });
+
+
+    // -------------------------------------------------------------
+    // CONCEPT 6: TRAVERSING THE DOM TREE (RELATIONSHIPS)
+    // -------------------------------------------------------------
+    // Moving around the tree without selecting everything from scratch:
+    // - parentElement: Moves up 1 level
+    // - children: Returns all child element nodes
+    // - firstElementChild / lastElementChild
+    // - nextElementSibling / previousElementSibling
+    // -------------------------------------------------------------
+    document.querySelector("#btn-traverse").addEventListener("click", () => {
+      const targetChild = document.querySelector("#child-two");
+
+      console.log("\n--- 3. DOM TRAVERSAL REPORT ---");
+      console.log("Target Child:", targetChild.textContent);
+      console.log("Parent Element:", targetChild.parentElement.id);
+      console.log("Previous Sibling:", targetChild.previousElementSibling.textContent);
+      console.log("Next Sibling:", targetChild.nextElementSibling.textContent);
+      console.log("All Children of Parent:", targetChild.parentElement.children);
+    });
+  </script>
+</body>
+</html>
