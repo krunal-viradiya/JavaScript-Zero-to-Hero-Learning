@@ -28,7 +28,7 @@ Every script in this repo has easy-to-understand, human-friendly comments explai
 
 ### 🟠 Phase 3: Browser & DOM
 - [x] `10-dom-manipulation.js` — Selecting HTML elements and changing text/styles dynamically.
-- [ ] `11-dom-events.js` — Handling clicks, typing, and form submissions.
+- [x] `11-dom-events.js` — Handling clicks, typing, and form submissions.
 - [ ] `12-localstorage.js` — Storing data directly in the browser memory.
 
 ### 🔴 Phase 4: Async JavaScript & APIs
