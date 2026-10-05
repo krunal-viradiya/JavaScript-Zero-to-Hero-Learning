@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Day 11: DOM Events Masterclass</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --border: #cbd5e1;
+      --accent: #10b981;
+      --danger: #ef4444;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      max-width: 820px;
+      margin: 40px auto;
+      padding: 0 20px 80px;
+      line-height: 1.6;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 22px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+
+    h1, h2 { margin-top: 0; color: #0f172a; }
+
+    button {
+      background-color: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 9px 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    button:hover { opacity: 0.9; }
+
+    input[type="text"] {
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 14px;
+      width: 260px;
+      margin-right: 8px;
+    }
+
+    /* Nested boxes for event propagation */
+    #grandparent {
+      background-color: #f1f5f9;
+      padding: 22px;
+      border: 2px dashed #94a3b8;
+      border-radius: 8px;
+    }
+    #parent {
+      background-color: #e2e8f0;
+      padding: 18px;
+      border: 2px dashed #64748b;
+      border-radius: 6px;
+      margin-top: 10px;
+    }
+    #child-btn {
+      background-color: #ea580c;
+    }
+
+    /* Event delegation list */
+    #delegation-list {
+      list-style: none;
+      padding: 0;
+      margin-top: 15px;
+    }
+    .tag-item {
+      display: inline-flex;
+      align-items: center;
+      background-color: #e0f2fe;
+      color: #0369a1;
+      padding: 6px 12px;
+      border-radius: 20px;
+      margin: 4px;
+      font-weight: 500;
+      font-size: 14px;
+    }
+    .del-btn {
+      background: none;
+      color: var(--danger);
+      border: none;
+      margin-left: 8px;
+      padding: 0;
+      font-size: 16px;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .log-box {
+      background-color: #0f172a;
+      color: #38bdf8;
+      font-family: monospace;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      min-height: 38px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="card">
+    <h1>Day 11: DOM Events Masterclass</h1>
+    <p>Open DevTools Console (<kbd>F12</kbd>) to view event stream outputs in real time.</p>
+  </header>
+
+  <!-- 1. MOUSE EVENT & THE EVENT OBJECT -->
+  <section class="card">
+    <h2>1. Mouse Click & The Event Object (`e`)</h2>
+    <p>Every event listener automatically receives an <strong>event object</strong> filled with metadata (coordinates, target, timestamp).</p>
+    <button id="inspect-click-btn">Click to Inspect Event Object</button>
+    <div id="click-log" class="log-box">Awaiting click...</div>
+  </section>
+
+  <!-- 2. KEYBOARD & INPUT EVENTS -->
+  <section class="card">
+    <h2>2. Real-Time Keyboard & Input Tracking</h2>
+    <p>Type into the field below to observe the difference between <code>input</code> (live update) and <code>keydown</code>.</p>
+    <input type="text" id="live-input" placeholder="Type something here..." />
+    <div id="input-log" class="log-box">Character count: 0 | Value: ""</div>
+  </section>
+
+  <!-- 3. FORM SUBMISSION & PREVENTDEFAULT -->
+  <section class="card">
+    <h2>3. Forms & <code>e.preventDefault()</code></h2>
+    <p>By default, submitting an HTML form refreshes the entire page. In modern apps, we stop this using <code>preventDefault()</code>.</p>
+    <form id="signup-form">
+      <input type="text" id="username-input" placeholder="Enter username..." required />
+      <button type="submit">Submit Form</button>
+    </form>
+    <div id="form-log" class="log-box">Form status: Idle</div>
+  </section>
+
+  <!-- 4. PROPAGATION: BUBBLING & CAPTURING -->
+  <section class="card">
+    <h2>4. Event Bubbling (Propagation)</h2>
+    <p>When you click the orange button, the event bubbles UP like an air bubble through water: Child &rarr; Parent &rarr; Grandparent.</p>
+    <div id="grandparent">
+      <strong>Grandparent Div (#grandparent)</strong>
+      <div id="parent">
+        <strong>Parent Div (#parent)</strong><br /><br />
+        <button id="child-btn">Target Child Button</button>
+      </div>
+    </div>
+    <div id="bubble-log" class="log-box">Click the orange button to see propagation order...</div>
+  </section>
+
+  <!-- 5. EVENT DELEGATION -->
+  <section class="card">
+    <h2>5. Event Delegation (Industry Standard Pattern)</h2>
+    <p>Instead of adding separate listeners to 1,000 buttons, attach <strong>one single listener</strong> to the parent list.</p>
+    <div>
+      <input type="text" id="tag-input" placeholder="New tag name..." />
+      <button id="add-tag-btn">Add Dynamic Tag</button>
+    </div>
+    <ul id="delegation-list">
+      <li class="tag-item">JavaScript <button class="del-btn" title="Delete">×</button></li>
+      <li class="tag-item">React <button class="del-btn" title="Delete">×</button></li>
+      <li class="tag-item">Node.js <button class="del-btn" title="Delete">×</button></li>
+    </ul>
+  </section>
+
+  <script>
+    // =============================================================
+    // THEORY: HOW JAVASCRIPT EVENTS OPERATE
+    // =============================================================
+    // Events are signals fired inside the browser window informing code
+    // that an action happened (click, scroll, keystroke, network load).
+    //
+    // Syntax:
+    // element.addEventListener(eventType, callbackFunction, options)
+    //
+    // Always use addEventListener instead of onclick inline attributes.
+    // addEventListener allows multiple independent handlers on one element
+    // and supports clean cleanup via removeEventListener.
+    // =============================================================
+
+
+    // -------------------------------------------------------------
+    // 1. INSPECTING THE EVENT OBJECT (`e` / `event`)
+    // -------------------------------------------------------------
+    const inspectBtn = document.querySelector("#inspect-click-btn");
+    const clickLog = document.querySelector("#click-log");
+
+    inspectBtn.addEventListener("click", (e) => {
+      // 'e.target' = The exact DOM element that triggered the event
+      // 'e.type'   = Event name ("click")
+      // 'e.clientX / clientY' = Mouse coordinates relative to viewport
+      const info = `Type: ${e.type} | Target: <${e.target.tagName.toLowerCase()}> | X: ${e.clientX}px, Y: ${e.clientY}px`;
+      clickLog.textContent = info;
+      console.log("Full Event Object:", e);
+    });
+
+
+    // -------------------------------------------------------------
+    // 2. INPUT & KEYBOARD EVENTS
+    // 'input' fires on every single keystroke, paste, or deletion.
+    // 'keydown' fires the moment a physical key is pressed down.
+    // -------------------------------------------------------------
+    const liveInput = document.querySelector("#live-input");
+    const inputLog = document.querySelector("#input-log");
+
+    // Tracks live value modifications:
+    liveInput.addEventListener("input", (e) => {
+      const val = e.target.value;
+      inputLog.textContent = `Character count: ${val.length} | Value: "${val}"`;
+    });
+
+    // Detect specific keys (e.g., detecting Enter or Escape):
+    liveInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        console.log("Enter key was pressed inside input!");
+      }
+    });
+
+
+    // -------------------------------------------------------------
+    // 3. PREVENT DEFAULT ON FORMS
+    // Crucial for SPA (Single Page Application) frameworks like React.
+    // -------------------------------------------------------------
+    const signupForm = document.querySelector("#signup-form");
+    const usernameInput = document.querySelector("#username-input");
+    const formLog = document.querySelector("#form-log");
+
+    signupForm.addEventListener("submit", (e) => {
+      // Stop browser from reloading page or submitting via traditional HTTP POST:
+      e.preventDefault();
+
+      const user = usernameInput.value.trim();
+      formLog.textContent = `Form intercepted! Ready to send "${user}" via Fetch/Axios API.`;
+      console.log(`Saved username to JS state: ${user}`);
+      
+      signupForm.reset();
+    });
+
+
+    // -------------------------------------------------------------
+    // 4. EVENT BUBBLING & STOPPING PROPAGATION
+    // Event Phases:
+    // 1. Capturing Phase (Trickles down from Window -> Target)
+    // 2. Target Phase (Executes on target element)
+    // 3. Bubbling Phase (Bubbles up from Target -> Window) [Default]
+    // -------------------------------------------------------------
+    const grandparent = document.querySelector("#grandparent");
+    const parent = document.querySelector("#parent");
+    const childBtn = document.querySelector("#child-btn");
+    const bubbleLog = document.querySelector("#bubble-log");
+
+    let bubblePath = [];
+
+    grandparent.addEventListener("click", () => {
+      bubblePath.push("Grandparent");
+      bubbleLog.textContent = "Propagation Path: " + bubblePath.join(" -> ");
+    });
+
+    parent.addEventListener("click", () => {
+      bubblePath.push("Parent");
+      bubbleLog.textContent = "Propagation Path: " + bubblePath.join(" -> ");
+    });
+
+    childBtn.addEventListener("click", (e) => {
+      bubblePath = ["Child Button"];
+      bubbleLog.textContent = "Propagation Path: " + bubblePath.join(" -> ");
+
+      // Uncomment line below if you ever need to stop bubbling to parents:
+      // e.stopPropagation();
+    });
+
+
+    // -------------------------------------------------------------
+    // 5. EVENT DELEGATION PATTERN
+    // Problem: If you dynamically add 50 new items, attaching individual
+    // event listeners burns memory and fails on newly created elements.
+    // Solution: Put 1 listener on the parent container, and check
+    // e.target to see what was clicked.
+    // -------------------------------------------------------------
+    const delegationList = document.querySelector("#delegation-list");
+    const addTagBtn = document.querySelector("#add-tag-btn");
+    const tagInput = document.querySelector("#tag-input");
+
+    // Single listener handles deletes for current AND future items:
+    delegationList.addEventListener("click", (e) => {
+      // Check if the clicked target is the delete button
+      if (e.target.classList.contains("del-btn")) {
+        const itemToRemove = e.target.parentElement; // Grabs the <li>
+        console.log(`Delegation caught click on: ${itemToRemove.firstChild.textContent.trim()}`);
+        itemToRemove.remove();
+      }
+    });
+
+    // Add new items dynamically to prove delegation works on new DOM nodes:
+    addTagBtn.addEventListener("click", () => {
+      const text = tagInput.value.trim();
+      if (!text) return;
+
+      const newLi = document.createElement("li");
+      newLi.className = "tag-item";
+      newLi.innerHTML = `${text} <button class="del-btn" title="Delete">×</button>`;
+
+      delegationList.appendChild(newLi);
+      tagInput.value = "";
+    });
+  </script>
+</body>
+</html>
