@@ -32,7 +32,7 @@ Every script in this repo has easy-to-understand, human-friendly comments explai
 - [x] `12-localstorage.html` — Storing data directly in the browser memory.
 
 ### 🔴 Phase 4: Async JavaScript & APIs
-- [ ] `13-promises.js` — Handling asynchronous tasks without page freezes.
+- [x] `13-promises.js` — Handling asynchronous tasks without page freezes.
 - [ ] `14-async-await.js` — Writing clean, readable async code.
 - [ ] `15-fetch-api.js` — Fetching live data from real APIs.
 
