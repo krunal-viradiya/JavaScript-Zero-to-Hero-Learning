@@ -33,7 +33,7 @@ Every script in this repo has easy-to-understand, human-friendly comments explai
 
 ### 🔴 Phase 4: Async JavaScript & APIs
 - [x] `13-promises.js` — Handling asynchronous tasks without page freezes.
-- [ ] `14-async-await.js` — Writing clean, readable async code.
+- [x] `14-async-await.js` — Writing clean, readable async code.
 - [ ] `15-fetch-api.js` — Fetching live data from real APIs.
 
 ---
@@ -53,6 +53,8 @@ Every script in this repo has easy-to-understand, human-friendly comments explai
    node 07-functions.js
    node 08-objects.js
    node 09-array-methords.js
+   node 13-promises.js
+   node 14-async-await.js
    ```
 
 ---
