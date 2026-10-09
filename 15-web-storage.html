@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Day 14: Web Storage API (localStorage & sessionStorage)</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --border: #cbd5e1;
+      --primary: #2563eb;
+      --danger: #ef4444;
+      --success: #10b981;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px 80px;
+      line-height: 1.6;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* Persistent theme class applied via JS */
+    body.dark-mode {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text: #f1f5f9;
+      --border: #334155;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 22px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+
+    h1, h2 { margin-top: 0; }
+
+    button {
+      background-color: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 14px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-right: 6px;
+      margin-bottom: 6px;
+      transition: opacity 0.2s;
+    }
+    button:hover { opacity: 0.9; }
+    button.danger-btn { background-color: var(--danger); }
+    button.success-btn { background-color: var(--success); }
+
+    input[type="text"] {
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 14px;
+      width: 250px;
+      margin-right: 8px;
+      background: var(--card-bg);
+      color: var(--text);
+    }
+
+    .console-box {
+      background-color: #020617;
+      color: #38bdf8;
+      font-family: monospace;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      margin-top: 10px;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="card">
+    <h1>Day 14: Web Storage API</h1>
+    <p>
+      Client-side storage lets web applications remember settings and state across browser refreshes without relying on a backend database.
+    </p>
+    <button id="theme-btn" class="success-btn">🌙 Toggle Dark Mode</button>
+  </header>
+
+  <!-- 1. BASIC STRING STORAGE -->
+  <section class="card">
+    <h2>1. Storing & Reading Plain Strings</h2>
+    <p>Test saving simple key-value pairs with <code>setItem</code>, <code>getItem</code>, and <code>removeItem</code>.</p>
+    <div>
+      <input type="text" id="name-input" placeholder="Enter developer name..." />
+      <button id="save-name-btn">Save</button>
+      <button id="read-name-btn">Read</button>
+      <button id="delete-name-btn" class="danger-btn">Delete</button>
+    </div>
+    <div id="simple-output" class="console-box">Status: Ready</div>
+  </section>
+
+  <!-- 2. JSON SERIALIZATION -->
+  <section class="card">
+    <h2>2. Complex Data (Objects & Arrays)</h2>
+    <p>
+      Storage engines can only hold plain strings. Always serialize with <code>JSON.stringify()</code> before saving, and parse with <code>JSON.parse()</code> upon retrieval.
+    </p>
+    <button id="save-user-btn">Save Profile Object</button>
+    <button id="read-user-btn">Read & Parse Object</button>
+    <button id="clear-all-btn" class="danger-btn">Clear All Storage</button>
+    <div id="complex-output" class="console-box">Status: Ready</div>
+  </section>
+
+  <!-- 3. SESSIONSTORAGE -->
+  <section class="card">
+    <h2>3. SessionStorage (Temporary per Tab)</h2>
+    <p>
+      Values saved here stay alive through page reloads, but vanish the moment the browser tab is closed.
+    </p>
+    <input type="text" id="session-input" placeholder="Type temporary session text..." />
+    <button id="save-session-btn">Save Session Data</button>
+    <div id="session-output" class="console-box">Session status: Empty</div>
+  </section>
+
+  <script>
+    // =============================================================
+    // THEORY: LOCALSTORAGE VS SESSIONSTORAGE
+    // =============================================================
+    // Both APIs share the exact same methods:
+    // - setItem(key, value)
+    // - getItem(key)
+    // - removeItem(key)
+    // - clear()
+    //
+    // The key differences:
+    // 1. localStorage: Persists forever until manually cleared.
+    //    Shared across all tabs belonging to the same origin (domain + port).
+    // 2. sessionStorage: Isolated to the single tab that created it.
+    //    Cleared automatically as soon as the tab closes.
+    //
+    // Capacity: ~5MB - 10MB per origin (far larger than the 4KB cookie limit).
+    // Note: Never store sensitive credentials (passwords, JWTs) here due to XSS risks.
+    // =============================================================
+
+
+    // -------------------------------------------------------------
+    // FEATURE 1: PERSISTENT THEME SWITCHER
+    // -------------------------------------------------------------
+    const themeBtn = document.querySelector("#theme-btn");
+
+    // Read stored theme preference on initial page load:
+    const activeTheme = localStorage.getItem("preferredTheme");
+
+    if (activeTheme === "dark") {
+      document.body.classList.add("dark-mode");
+      themeBtn.textContent = "☀️ Switch to Light Mode";
+    }
+
+    themeBtn.addEventListener("click", () => {
+      document.body.classList.toggle("dark-mode");
+
+      if (document.body.classList.contains("dark-mode")) {
+        localStorage.setItem("preferredTheme", "dark");
+        themeBtn.textContent = "☀️ Switch to Light Mode";
+      } else {
+        localStorage.setItem("preferredTheme", "light");
+        themeBtn.textContent = "🌙 Switch to Dark Mode";
+      }
+    });
+
+
+    // -------------------------------------------------------------
+    // FEATURE 2: BASIC STRING OPERATIONS
+    // -------------------------------------------------------------
+    const nameInput = document.querySelector("#name-input");
+    const saveNameBtn = document.querySelector("#save-name-btn");
+    const readNameBtn = document.querySelector("#read-name-btn");
+    const deleteNameBtn = document.querySelector("#delete-name-btn");
+    const simpleOutput = document.querySelector("#simple-output");
+
+    saveNameBtn.addEventListener("click", () => {
+      const val = nameInput.value.trim();
+      if (!val) return;
+
+      localStorage.setItem("devName", val);
+      simpleOutput.textContent = `Saved: devName = "${val}"`;
+      nameInput.value = "";
+    });
+
+    readNameBtn.addEventListener("click", () => {
+      const stored = localStorage.getItem("devName");
+      if (stored !== null) {
+        simpleOutput.textContent = `Retrieved from localStorage: "${stored}"`;
+      } else {
+        simpleOutput.textContent = "Key 'devName' does not exist in storage (returned null).";
+      }
+    });
+
+    deleteNameBtn.addEventListener("click", () => {
+      localStorage.removeItem("devName");
+      simpleOutput.textContent = "Key 'devName' removed from localStorage.";
+    });
+
+
+    // -------------------------------------------------------------
+    // FEATURE 3: STORING OBJECTS WITH JSON SERIALIZATION
+    // -------------------------------------------------------------
+    const saveUserBtn = document.querySelector("#save-user-btn");
+    const readUserBtn = document.querySelector("#read-user-btn");
+    const clearAllBtn = document.querySelector("#clear-all-btn");
+    const complexOutput = document.querySelector("#complex-output");
+
+    const developerRecord = {
+      name: "Krunal Viradiya",
+      role: "MERN Stack Developer",
+      stack: ["MongoDB", "Express", "React", "Node.js"],
+      completedDays: 14
+    };
+
+    saveUserBtn.addEventListener("click", () => {
+      // Step 1: Turn JS Object into a JSON string
+      const serialized = JSON.stringify(developerRecord);
+
+      // Step 2: Store string in localStorage
+      localStorage.setItem("devProfile", serialized);
+
+      complexOutput.textContent = `Serialized & Saved:\n${serialized}`;
+    });
+
+    readUserBtn.addEventListener("click", () => {
+      const rawString = localStorage.getItem("devProfile");
+
+      if (!rawString) {
+        complexOutput.textContent = "No stored profile found! Click 'Save Profile Object' first.";
+        return;
+      }
+
+      // Step 3: Parse JSON string back into a live JavaScript Object
+      const parsedObj = JSON.parse(rawString);
+
+      complexOutput.textContent = `Parsed Object:\nName: ${parsedObj.name}\nRole: ${parsedObj.role}\nStack: ${parsedObj.stack.join(" | ")}\nDays Done: ${parsedObj.completedDays}`;
+    });
+
+    clearAllBtn.addEventListener("click", () => {
+      localStorage.clear();
+      complexOutput.textContent = "Entire localStorage wiped clean via localStorage.clear().";
+    });
+
+
+    // -------------------------------------------------------------
+    // FEATURE 4: SESSIONSTORAGE DEMO
+    // -------------------------------------------------------------
+    const sessionInput = document.querySelector("#session-input");
+    const saveSessionBtn = document.querySelector("#save-session-btn");
+    const sessionOutput = document.querySelector("#session-output");
+
+    // Check if session note exists on load:
+    const activeNote = sessionStorage.getItem("tempSessionNote");
+    if (activeNote) {
+      sessionOutput.textContent = `Active Session Note: "${activeNote}"`;
+    }
+
+    saveSessionBtn.addEventListener("click", () => {
+      const note = sessionInput.value.trim();
+      if (!note) return;
+
+      sessionStorage.setItem("tempSessionNote", note);
+      sessionOutput.textContent = `Stored in sessionStorage: "${note}" (Closes with tab)`;
+      sessionInput.value = "";
+    });
+  </script>
+</body>
+</html>
