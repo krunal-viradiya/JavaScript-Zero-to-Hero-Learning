@@ -34,7 +34,8 @@ Every script in this repo has easy-to-understand, human-friendly comments explai
 ### 🔴 Phase 4: Async JavaScript & APIs
 - [x] `13-promises.js` — Handling asynchronous tasks without page freezes.
 - [x] `14-async-await.js` — Writing clean, readable async code.
-- [ ] `15-fetch-api.js` — Fetching live data from real APIs.
+- [x] `15-web-storage.html` — completes your client-side data persistence toolkit.
+- [ ] `16-fetch-api.js` — Fetching live data from real APIs.
 
 ---
 
