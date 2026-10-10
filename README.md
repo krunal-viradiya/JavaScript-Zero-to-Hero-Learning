@@ -36,6 +36,8 @@ Every script in this repo has easy-to-understand, human-friendly comments explai
 - [x] `14-async-await.js` — Writing clean, readable async code.
 - [x] `15-web-storage.html` — completes your client-side data persistence toolkit.
 - [ ] `16-fetch-api.js` — Fetching live data from real APIs.
+- [x] `17-oop-classes.js` — covers modern Object-Oriented JavaScript (OOP).
+
 
 ---
 
@@ -56,6 +58,7 @@ Every script in this repo has easy-to-understand, human-friendly comments explai
    node 09-array-methords.js
    node 13-promises.js
    node 14-async-await.js
+   node 17-oop-classes.js
    ```
 
 ---
