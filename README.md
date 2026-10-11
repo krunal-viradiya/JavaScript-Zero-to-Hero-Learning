@@ -34,8 +34,8 @@ Every script in this repo has easy-to-understand, human-friendly comments explai
 ### 🔴 Phase 4: Async JavaScript & APIs
 - [x] `13-promises.js` — Handling asynchronous tasks without page freezes.
 - [x] `14-async-await.js` — Writing clean, readable async code.
-- [x] `15-web-storage.html` — completes your client-side data persistence toolkit.
-- [ ] `16-fetch-api.js` — Fetching live data from real APIs.
+- [x] `15-web-storage.html` — Completes your client-side data persistence toolkit.
+- [x] `16-error-handling.js` — Handles crashes, bugs, and network failures.
 - [x] `17-oop-classes.js` — covers modern Object-Oriented JavaScript (OOP).
 
 
