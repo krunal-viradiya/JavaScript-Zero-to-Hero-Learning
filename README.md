@@ -36,7 +36,8 @@ Every script in this repo has easy-to-understand, human-friendly comments explai
 - [x] `14-async-await.js` — Writing clean, readable async code.
 - [x] `15-web-storage.html` — Completes your client-side data persistence toolkit.
 - [x] `16-error-handling.js` — Handles crashes, bugs, and network failures.
-- [x] `17-oop-classes.js` — covers modern Object-Oriented JavaScript (OOP).
+- [x] `17-oop-classes.js` — Covers modern Object-Oriented JavaScript (OOP).
+- [x] `18-closures-and-scope.js` — Most frequently asked JavaScript interview topics and the engine behind React Hooks.
 
 
 ---
@@ -59,6 +60,7 @@ Every script in this repo has easy-to-understand, human-friendly comments explai
    node 13-promises.js
    node 14-async-await.js
    node 17-oop-classes.js
+   node 18-closures-and-scope.js
    ```
 
 ---
