@@ -36,8 +36,11 @@ Every script in this repo has easy-to-understand, human-friendly comments explai
 - [x] `14-async-await.js` — Writing clean, readable async code.
 - [x] `15-web-storage.html` — Completes your client-side data persistence toolkit.
 - [x] `16-error-handling.js` — Handles crashes, bugs, and network failures.
+
+### 🔴 Phase 4: External JavaScript Topics
 - [x] `17-oop-classes.js` — Covers modern Object-Oriented JavaScript (OOP).
 - [x] `18-closures-and-scope.js` — Most frequently asked JavaScript interview topics and the engine behind React Hooks.
+- [x] `19-debouncing-and-throttling.html` — Debouncing and throttling are the two most crucial performance optimization techniques.
 
 
 ---
