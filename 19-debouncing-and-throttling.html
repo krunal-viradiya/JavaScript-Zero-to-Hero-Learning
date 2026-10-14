@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Day 18: Debouncing & Throttling Masterclass</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --border: #cbd5e1;
+      --accent: #10b981;
+      --danger: #ef4444;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      max-width: 820px;
+      margin: 40px auto;
+      padding: 0 20px 80px;
+      line-height: 1.6;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 22px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+
+    h1, h2 { margin-top: 0; color: #0f172a; }
+
+    input[type="text"] {
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 15px;
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 12px;
+    }
+
+    button {
+      background-color: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 9px 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .counter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 15px;
+    }
+
+    .counter-box {
+      background: #f1f5f9;
+      padding: 16px;
+      border-radius: 8px;
+      border-left: 4px solid var(--primary);
+    }
+
+    .counter-box.throttle {
+      border-left-color: var(--accent);
+    }
+
+    .counter-box.debounce {
+      border-left-color: #f59e0b;
+    }
+
+    .count-value {
+      font-size: 26px;
+      font-weight: bold;
+      color: #0f172a;
+      display: block;
+      margin-top: 6px;
+    }
+
+    .scroll-test-area {
+      height: 140px;
+      overflow-y: scroll;
+      background: #e2e8f0;
+      padding: 14px;
+      border-radius: 6px;
+      margin-top: 10px;
+      border: 1px dashed #64748b;
+    }
+
+    .scroll-content {
+      height: 600px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: #64748b;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="card">
+    <h1>Day 18: Performance Optimization (Debounce & Throttle)</h1>
+    <p>
+      High-frequency events like <code>input</code>, <code>resize</code>, and <code>scroll</code> can fire hundreds of times per second, freezing the UI. Rate-limiting keeps performance buttery smooth.
+    </p>
+  </header>
+
+  <!-- 1. DEBOUNCE SECTION -->
+  <section class="card">
+    <h2>1. Debouncing (Auto-Complete & Search Inputs)</h2>
+    <p>
+      <strong>Concept:</strong> "Wait until the user pauses for X ms before firing." Every new keystroke resets the countdown timer.
+    </p>
+    <input type="text" id="search-input" placeholder="Start typing fast to search..." />
+    <div class="counter-grid">
+      <div class="counter-box">
+        Normal Keystroke Events:
+        <span id="raw-input-count" class="count-value">0</span>
+      </div>
+      <div class="counter-box debounce">
+        Debounced API Calls (500ms delay):
+        <span id="debounced-count" class="count-value">0</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. THROTTLE SECTION -->
+  <section class="card">
+    <h2>2. Throttling (Scroll, Resize, Button Spamming)</h2>
+    <p>
+      <strong>Concept:</strong> "Fire at most once every X ms, ignoring all calls in between."
+    </p>
+    <div class="scroll-test-area" id="scroll-box">
+      <div class="scroll-content">
+        <span>Scroll inside this container...</span>
+        <span>Keep scrolling...</span>
+        <span>Bottom reached!</span>
+      </div>
+    </div>
+    <div class="counter-grid">
+      <div class="counter-box">
+        Normal Scroll Events:
+        <span id="raw-scroll-count" class="count-value">0</span>
+      </div>
+      <div class="counter-box throttle">
+        Throttled Function Calls (400ms interval):
+        <span id="throttled-count" class="count-value">0</span>
+      </div>
+    </div>
+  </section>
+
+
+  <script>
+    // =============================================================
+    // THEORY: DEBOUNCING VS THROTTLING
+    // =============================================================
+    // Both use Closures to keep track of timers across calls.
+    //
+    // - DEBOUNCING: Delays execution until a period of inactivity passes.
+    //   Use cases: Search bar autosuggest, window resize ending, auto-saving forms.
+    //
+    // - THROTTLING: Enforces a maximum execution rate over time.
+    //   Use cases: Infinite scrolling, game loop tick, mousemove tracking, submit spam prevention.
+    // =============================================================
+
+
+    // -------------------------------------------------------------
+    // 1. DEBOUNCE FUNCTION IMPLEMENTATION
+    // -------------------------------------------------------------
+    function debounce(callbackFn, delay = 500) {
+      let timerId;
+
+      return function (...args) {
+        // Clear previous pending timer on every call:
+        clearTimeout(timerId);
+
+        // Schedule new timer:
+        timerId = setTimeout(() => {
+          callbackFn.apply(this, args);
+        }, delay);
+      };
+    }
+
+
+    // -------------------------------------------------------------
+    // 2. THROTTLE FUNCTION IMPLEMENTATION
+    // -------------------------------------------------------------
+    function throttle(callbackFn, interval = 400) {
+      let lastExecutionTime = 0;
+
+      return function (...args) {
+        const currentTime = Date.now();
+
+        // Check if sufficient time has elapsed since last execution:
+        if (currentTime - lastExecutionTime >= interval) {
+          lastExecutionTime = currentTime;
+          callbackFn.apply(this, args);
+        }
+      };
+    }
+
+
+    // -------------------------------------------------------------
+    // LIVE DEMO HOOKS
+    // -------------------------------------------------------------
+    // Elements:
+    const searchInput = document.querySelector("#search-input");
+    const rawInputDisplay = document.querySelector("#raw-input-count");
+    const debouncedDisplay = document.querySelector("#debounced-count");
+
+    const scrollBox = document.querySelector("#scroll-box");
+    const rawScrollDisplay = document.querySelector("#raw-scroll-count");
+    const throttledDisplay = document.querySelector("#throttled-count");
+
+    let rawInputCounter = 0;
+    let debouncedCounter = 0;
+    let rawScrollCounter = 0;
+    let throttledCounter = 0;
+
+    // A. Debounce Demo
+    const executeSearchApi = (query) => {
+      debouncedCounter++;
+      debouncedDisplay.textContent = debouncedCounter;
+      console.log(`[Debounced API Call] Query: "${query}" fired at: ${new Date().toLocaleTimeString()}`);
+    };
+
+    const debouncedSearchHandler = debounce((val) => executeSearchApi(val), 500);
+
+    searchInput.addEventListener("input", (e) => {
+      rawInputCounter++;
+      rawInputDisplay.textContent = rawInputCounter;
+      debouncedSearchHandler(e.target.value);
+    });
+
+    // B. Throttle Demo
+    const executeScrollCalculation = () => {
+      throttledCounter++;
+      throttledDisplay.textContent = throttledCounter;
+      console.log(`[Throttled Calculation] Position computed at: ${new Date().toLocaleTimeString()}`);
+    };
+
+    const throttledScrollHandler = throttle(executeScrollCalculation, 400);
+
+    scrollBox.addEventListener("scroll", () => {
+      rawScrollCounter++;
+      rawScrollDisplay.textContent = rawScrollCounter;
+      throttledScrollHandler();
+    });
+  </script>
+</body>
+</html>
