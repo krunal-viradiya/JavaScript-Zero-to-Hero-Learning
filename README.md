@@ -41,6 +41,7 @@ Every script in this repo has easy-to-understand, human-friendly comments explai
 - [x] `17-oop-classes.js` — Covers modern Object-Oriented JavaScript (OOP).
 - [x] `18-closures-and-scope.js` — Most frequently asked JavaScript interview topics and the engine behind React Hooks.
 - [x] `19-debouncing-and-throttling.html` — Debouncing and throttling are the two most crucial performance optimization techniques.
+- [x] `20-event-loop.js` — JavaScript concurrency model, execution contexts, Call Stack, Web APIs, Microtask Queue vs Macrotask Queue.
 
 
 ---
@@ -64,6 +65,7 @@ Every script in this repo has easy-to-understand, human-friendly comments explai
    node 14-async-await.js
    node 17-oop-classes.js
    node 18-closures-and-scope.js
+   node 20-event-loop.js
    ```
 
 ---
