@@ -42,6 +42,7 @@ Every script in this repo has easy-to-understand, human-friendly comments explai
 - [x] `18-closures-and-scope.js` — Most frequently asked JavaScript interview topics and the engine behind React Hooks.
 - [x] `19-debouncing-and-throttling.html` — Debouncing and throttling are the two most crucial performance optimization techniques.
 - [x] `20-event-loop.js` — JavaScript concurrency model, execution contexts, Call Stack, Web APIs, Microtask Queue vs Macrotask Queue.
+- [x] `21-prototype-and-inheritance.js` — JavaScript achieved inheritance entirely through Prototypes.
 
 
 ---
