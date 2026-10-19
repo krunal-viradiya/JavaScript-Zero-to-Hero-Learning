@@ -43,6 +43,7 @@ Every script in this repo has easy-to-understand, human-friendly comments explai
 - [x] `19-debouncing-and-throttling.html` — Debouncing and throttling are the two most crucial performance optimization techniques.
 - [x] `20-event-loop.js` — JavaScript concurrency model, execution contexts, Call Stack, Web APIs, Microtask Queue vs Macrotask Queue.
 - [x] `21-prototype-and-inheritance.js` — JavaScript achieved inheritance entirely through Prototypes.
+- [x] `22-this-keyword-mastery.js` — JavaScript achieved inheritance entirely through Prototypes.
 
 
 ---
