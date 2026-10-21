@@ -1,78 +1,108 @@
-# 🚀 JavaScript Zero to Hero Learning Journey
+# ⚡ JavaScript: Zero to Hero
 
-Welcome to my personal JavaScript playground!
+<p align="center">
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="JavaScript" width="70" height="70" />
+</p>
 
-I started this repo to master pure JavaScript from scratch. Whether it takes days or months, I'm documenting every step of my coding journey here. Even if I post late some days, the goal is simple: stay consistent and write clean code.
+<p align="center">
+  <b>A comprehensive, no-nonsense repository mapping the transition from core syntax to engine internals.</b>
+</p>
 
-Every script in this repo has easy-to-understand, human-friendly comments explaining:
-* What the code is actually doing
-* Why we write it that way
-* Real-world analogies so concepts stick easily
+<p align="center">
+  <img src="https://img.shields.io/badge/Language-JavaScript%20(ES6+)-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript" />
+  <img src="https://img.shields.io/badge/Runtime-Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js" />
+  <img src="https://img.shields.io/badge/Focus-MERN%20Stack%20Preparation-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="Full Stack Prep" />
+  <img src="https://img.shields.io/badge/Author-krunal--viradiya-blue?style=for-the-badge&logo=github" alt="Author" />
+</p>
 
 ---
 
-## 📌 Progress & Learning Roadmap
+## 📌 Overview
+
+This repository documents a focused, module-by-module breakdown of pure JavaScript. Every script is standalone, designed to run directly in Node.js or a browser, and structured with clean code alongside technical inline notes covering:
+
+- **Mechanical Behavior:** How the V8 engine interprets and executes the code.
+- **Architectural Reasoning:** Why certain paradigms outrank legacy patterns.
+- **Real-World Patterns:** Direct translation to modern React components and Node.js APIs.
+
+---
+
+## 🗺️ Roadmap & Curriculum
 
 ### 🟢 Phase 1: Core Fundamentals
-- [x] `01-variables.js` — `let` vs `const`, storing data, and common mistakes to avoid.
-- [x] `02-data-types.js` — Strings, numbers, booleans, null vs undefined, and typeof.
-- [x] `03-operators.js` — Math, logical operators (`&&`, `||`), and strict checks (`===`).
-- [x] `04-conditionals.js` — `if`, `else if`, `else`, and quick ternary conditions.
-- [x] `05-loops.js` — `for`, `while`, and how to loop without breaking things.
+| Module | File | Description |
+| :--- | :--- | :--- |
+| **01** | `01-variables.js` | `let` vs `const`, variable scope, TDZ, aur data store karne ke best practices. |
+| **02** | `02-datatypes.js` | Primitive vs non-primitive data types, type conversion, aur `null` vs `undefined`. |
+| **03** | `03-operators.js` | Arithmetic, assignment, comparison (`===`), logical operators, aur short-circuiting. |
+| **04** | `04-conditionals.js` | `if`, `else if`, `else`, switch cases, aur modern ternary operator. |
+| **05** | `05-loops.js` | `for`, `while`, `do-while` loops, break/continue, aur iteration control. |
+
+---
 
 ### 🟡 Phase 2: Functions & Data Structures
-- [x] `06-arrays.js` — Lists, push, pop, slice, and everyday tricks.
-- [x] `07-functions.js` — Function basics, parameters, return values, and modern arrow syntax.
-- [x] `08-objects.js` — Key-value pairs and structuring real-world data.
-- [x] `09-array-methods.js` — Mastering `.map()`, `.filter()`, and `.reduce()`.
+| Module | File | Description |
+| :--- | :--- | :--- |
+| **06** | `06-arrays.js` | Array basics, indexing, memory reference, common methods jaise `push`, `pop`, `slice`. |
+| **07** | `07-functions.js` | Function declarations, expressions, parameters, return values, aur arrow functions. |
+| **08** | `08-objects.js` | Key-value pairs, nested objects, dot vs bracket notation, aur object methods. |
+| **09** | `09-array-methods.js` | Essential higher-order array methods jaise `.map()`, `.filter()`, aur `.reduce()`. |
+
+---
 
 ### 🟠 Phase 3: Browser & DOM
-- [x] `10-dom-manipulation.html` — Selecting HTML elements and changing text/styles dynamically.
-- [x] `11-dom-events.html` — Handling clicks, typing, and form submissions.
-- [x] `12-localstorage.html` — Storing data directly in the browser memory.
+| Module | File | Description |
+| :--- | :--- | :--- |
+| **10** | `10-dom-manipulations.html` | DOM tree traverse karna, elements select karna, text aur dynamic CSS styles update karna. |
+| **11** | `11-dom-events.html` | User clicks, input events, form submit handle karna, event bubbling aur delegation. |
+| **12** | `12-localstorage.html` | Browser ke `localStorage` me data save karna, retrieve karna aur clear karna. |
+
+---
 
 ### 🔴 Phase 4: Async JavaScript & APIs
-- [x] `13-promises.js` — Handling asynchronous tasks without page freezes.
-- [x] `14-async-await.js` — Writing clean, readable async code.
-- [x] `15-web-storage.html` — Completes your client-side data persistence toolkit.
-- [x] `16-error-handling.js` — Handles crashes, bugs, and network failures.
-
-### 🔴 Phase 4: External JavaScript Topics
-- [x] `17-oop-classes.js` — Covers modern Object-Oriented JavaScript (OOP).
-- [x] `18-closures-and-scope.js` — Most frequently asked JavaScript interview topics and the engine behind React Hooks.
-- [x] `19-debouncing-and-throttling.html` — Debouncing and throttling are the two most crucial performance optimization techniques.
-- [x] `20-event-loop.js` — JavaScript concurrency model, execution contexts, Call Stack, Web APIs, Microtask Queue vs Macrotask Queue.
-- [x] `21-prototype-and-inheritance.js` — JavaScript achieved inheritance entirely through Prototypes.
-- [x] `22-this-keyword-mastery.js` — this is not determined by where a function is declared, but by how it is invoked.
-- [x] `23-functional-programming.js` — Modern JavaScript frameworks React (especially Hooks and Redux) are built.
+| Module | File | Description |
+| :--- | :--- | :--- |
+| **13** | `13-promises.js` | Asynchronous operations, Promise states (`resolve`/`reject`), aur `.then()`/`.catch()` chaining. |
+| **14** | `14-async-await.js` | Clean async code writing, `async`/`await` syntax, aur API handling with `fetch()`. |
+| **15** | `15-web-storage.html` | Comprehensive client-side storage, `sessionStorage` vs `localStorage`, aur JSON data parsing. |
+| **16** | `16-error-handling.js` | Bugs aur exceptions ko handle karna with `try...catch...finally` aur custom errors throw karna. |
 
 ---
 
-## 💻 How to Run Any File Locally
-
-1. Make sure you have [Node.js](https://nodejs.org/) installed.
-2. Open terminal in this folder.
-3. Run any topic file:
-   ```bash
-   node 01-variables.js
-   node 02-datatypes.js
-   node 03-operators.js
-   node 04-conditional.js
-   node 05-loops.js
-   node 06-arrays.js
-   node 07-functions.js
-   node 08-objects.js
-   node 09-array-methords.js
-   node 13-promises.js
-   node 14-async-await.js
-   node 17-oop-classes.js
-   node 18-closures-and-scope.js
-   node 20-event-loop.js
-   node 21-prototype-and-inheritance.js
-   node 22-this-keyword-mastery.js
-   node 23-functional-programming.js
-   ```
+### 🟣 Phase 5: Advanced & External Topics
+| Module | File | Description |
+| :--- | :--- | :--- |
+| **17** | `17-oop-classes.js` | ES6 classes, constructor function, `this` context, inheritance (`extends`), aur encapsulation. |
+| **18** | `18-closures-and-scope.js` | Lexical scope, scope chain, closure mechanism, aur React Hooks ka internal working model. |
+| **19** | `19-debouncing-and-throttling.html` | High-frequency events (scroll/resize/search) ko optimize karne ke liye debounce aur throttle techniques. |
+| **20** | `20-event-loop.js` | Concurrency model, Call Stack, Web APIs, Microtask vs Macrotask Queue, aur execution order. |
+| **21** | `21-prototypes-and-inheritance.js` | Prototypal inheritance, prototype chain lookup, constructor prototype, aur `Object.create()`. |
+| **22** | `22-this-keyword-mastery.js` | Execution context ke rules, explicit binding (`call`, `apply`, `bind`), aur arrow function lexical `this`. |
+| **23** | `23-functional-programming.js` | Pure functions, immutability, side-effects avoid karna, currying, aur function composition. |
 
 ---
 
-*Note to self: Slow progress is still progress. Just don't stop.*
+---
+
+## 🛠️ Execution & Local Setup
+
+### Prerequisites
+- [Node.js](https://nodejs.org/) installed (v18+ recommended)
+- A modern web browser (Chrome, Firefox, or Edge)
+
+### Running Node.js Scripts
+Execute any backend or engine-focused script directly from your terminal:
+
+```bash
+# Clone the repository
+git clone https://github.com/krunal-viradiya/JavaScript-Zero-to-Hero-Learning.git
+
+# Enter repository directory
+cd JavaScript-Zero-to-Hero-Learning
+
+# Run any module
+node 01-variables.js
+node 20-event-loop.js
+```
+ 
+Note to self: Slow progress is still progress. Just don't stop.
